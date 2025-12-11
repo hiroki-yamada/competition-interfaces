@@ -25,13 +25,23 @@ find_package(handyman_msgs REQUIRED)
 find_package(interactive_cleanup_msgs REQUIRED)
 find_package(human_navigation_msgs REQUIRED)
 
-add_executable(teleop_key src/teleop_key.cpp)
-ament_target_dependencies(teleop_key rclcpp std_msgs geometry_msgs sensor_msgs trajectory_msgs tf2_ros tf2_geometry_msgs handyman_msgs interactive_cleanup_msgs human_navigation_msgs)
-target_link_libraries(teleop_key ${CURSES_LIBRARIES})
-target_include_directories(teleop_key PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${CURSES_INCLUDE_DIR})
+add_executable(teleop_handyman src/teleop_handyman.cpp)
+ament_target_dependencies(teleop_handyman rclcpp std_msgs geometry_msgs sensor_msgs trajectory_msgs tf2_ros tf2_geometry_msgs handyman_msgs)
+target_link_libraries(teleop_handyman ${CURSES_LIBRARIES})
+target_include_directories(teleop_handyman PRIVATE include ${CURSES_INCLUDE_DIR})
+
+add_executable(teleop_interactive_cleanup src/teleop_interactive_cleanup.cpp)
+ament_target_dependencies(teleop_interactive_cleanup rclcpp std_msgs geometry_msgs sensor_msgs trajectory_msgs tf2_ros tf2_geometry_msgs interactive_cleanup_msgs)
+target_link_libraries(teleop_interactive_cleanup ${CURSES_LIBRARIES})
+target_include_directories(teleop_interactive_cleanup PRIVATE include ${CURSES_INCLUDE_DIR})
+
+add_executable(teleop_human_navigation src/teleop_human_navigation.cpp)
+ament_target_dependencies(teleop_human_navigation rclcpp std_msgs geometry_msgs sensor_msgs trajectory_msgs tf2_ros tf2_geometry_msgs human_navigation_msgs)
+target_link_libraries(teleop_human_navigation ${CURSES_LIBRARIES})
+target_include_directories(teleop_human_navigation PRIVATE include ${CURSES_INCLUDE_DIR})
 
 install(
-  TARGETS teleop_key
+  TARGETS teleop_handyman teleop_interactive_cleanup teleop_human_navigation
   DESTINATION lib/${PROJECT_NAME}
 )
 

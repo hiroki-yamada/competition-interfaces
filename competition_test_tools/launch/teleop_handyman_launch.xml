@@ -3,7 +3,7 @@
 	<arg name="sigverse_ros_bridge_port"        default="50001" />
 	<arg name="ros_bridge_port"                 default="9090" />
 
-	<node pkg="competition_test_tools" exec="teleop_key" output="screen" launch-prefix="gnome-terminal -t 'HSR teleop key' -- ">
+	<node pkg="competition_test_tools" exec="teleop_handyman" output="screen" launch-prefix="gnome-terminal -t 'Handyman' -- ">
 		<!--
 		<remap from="/hsrb/message/to_robot"                  to="/hsrb/message/to_robot" />
 		<remap from="/hsrb/message/to_human"                  to="/hsrb/message/to_human" />
