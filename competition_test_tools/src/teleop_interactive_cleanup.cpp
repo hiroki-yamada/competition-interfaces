@@ -23,12 +23,11 @@ public:
   {
     if (!win_header) { return; }
 
-    mvwprintw(win_header, start_row + 0, 2, " 0: Send Msg: %s", MsgCm::I_AM_READY);
-    mvwprintw(win_header, start_row + 1, 2, " 1: Send Msg: %s", MsgCm::OBJECT_GRASPED);
-    mvwprintw(win_header, start_row + 2, 2, " 2: Send Msg: %s", MsgCm::TASK_FINISHED);
-    mvwprintw(win_header, start_row + 3, 2, " 6: Send Msg: %s", MsgIc::IS_THIS_CORRECT);
-    mvwprintw(win_header, start_row + 4, 2, " 7: Send Msg: %s", MsgIc::POINT_IT_AGAIN);
-    mvwprintw(win_header, start_row + 5, 2, " 9: Send Msg: %s", MsgCm::GIVE_UP);
+    mvwprintw(win_header, start_row + 0, 2, " 1: Send Msg: %s", MsgCm::OBJECT_GRASPED);
+    mvwprintw(win_header, start_row + 1, 2, " 2: Send Msg: %s", MsgCm::TASK_FINISHED);
+    mvwprintw(win_header, start_row + 2, 2, " 6: Send Msg: %s", MsgIc::IS_THIS_CORRECT);
+    mvwprintw(win_header, start_row + 3, 2, " 7: Send Msg: %s", MsgIc::POINT_IT_AGAIN);
+    mvwprintw(win_header, start_row + 4, 2, " 9: Send Msg: %s", MsgCm::GIVE_UP);
   }
 
   bool handle_numeric_key(int key) override
@@ -37,7 +36,6 @@ public:
 
     switch (key)
     {
-      case '0': send_message(MsgCm::I_AM_READY);      return true;
       case '1': send_message(MsgCm::OBJECT_GRASPED);  return true;
       case '2': send_message(MsgCm::TASK_FINISHED);   return true;
       case '6': send_message(MsgIc::IS_THIS_CORRECT); return true;
@@ -63,6 +61,15 @@ private:
   void recv_message(const interactive_cleanup_msgs::msg::InteractiveCleanupMsg::SharedPtr message)
   {
     RCLCPP_INFO(node_->get_logger(),"IC:Subscribe:%s, %s", message->message.c_str(), message->detail.c_str());
+
+    if(message->message==MsgCm::ARE_YOU_READY)
+    {
+      interactive_cleanup_msgs::msg::InteractiveCleanupMsg i_am_ready_msg;
+      i_am_ready_msg.message = MsgCm::I_AM_READY;
+      pub_msg_ic_->publish(i_am_ready_msg);
+
+      RCLCPP_INFO(node_->get_logger(), "IC:Send msg:%s", MsgCm::I_AM_READY);
+    }
   }
 };
 

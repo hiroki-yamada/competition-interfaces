@@ -4,7 +4,8 @@
 
 namespace MsgHn 
 {
-  constexpr const char* TEST_MSG = "This is a test message.";
+  constexpr const char* TEST_MSG1 = "This is a test message.";
+  constexpr const char* TEST_MSG2 = "Please take the apple and place it on the white table.";
 }
 
 class HumanNavigationScenario : public TeleopScenarioInterface
@@ -24,8 +25,8 @@ public:
   {
     if (!win_header) { return; }
 
-    mvwprintw(win_header, start_row + 0, 2, " 0: Send Msg: %s", MsgCm::I_AM_READY);
-    mvwprintw(win_header, start_row + 1, 2, " 1: Send Msg: %s", MsgHn::TEST_MSG);
+    mvwprintw(win_header, start_row + 0, 2, " 1: Send Msg: %s", MsgHn::TEST_MSG1);
+    mvwprintw(win_header, start_row + 1, 2, " 2: Send Msg: %s", MsgHn::TEST_MSG2);
     mvwprintw(win_header, start_row + 2, 2, " 9: Send Msg: %s", MsgCm::GIVE_UP);
   }
 
@@ -35,10 +36,10 @@ public:
 
     switch (key)
     {
-      case '0': send_message (MsgCm::I_AM_READY);      return true;
-      case '1': send_guid_msg(MsgHn::TEST_MSG, "All"); return true;
-      case '9': send_message (MsgCm::GIVE_UP);         return true;
-      default:                                         return false;
+      case '1': send_guid_msg(MsgHn::TEST_MSG1, "All"); return true;
+      case '2': send_guid_msg(MsgHn::TEST_MSG2, "All"); return true;
+      case '9': send_message (MsgCm::GIVE_UP);          return true;
+      default:                                          return false;
     }
   }
 
@@ -69,6 +70,15 @@ private:
   void recv_message(const human_navigation_msgs::msg::HumanNaviMsg::SharedPtr message)
   {
     RCLCPP_INFO(node_->get_logger(),"HN:Subscribe:%s, %s", message->message.c_str(), message->detail.c_str());
+
+    if(message->message==MsgCm::ARE_YOU_READY)
+    {
+      human_navigation_msgs::msg::HumanNaviMsg i_am_ready_msg;
+      i_am_ready_msg.message = MsgCm::I_AM_READY;
+      pub_msg_hn_->publish(i_am_ready_msg);
+
+      RCLCPP_INFO(node_->get_logger(), "HN:Send msg:%s", MsgCm::I_AM_READY);
+    }
   }
 };
 

@@ -24,12 +24,11 @@ public:
   {
     if (!win_header) { return; }
 
-    mvwprintw(win_header, start_row + 0, 2, " 0: Send Msg: %s", MsgCm::I_AM_READY);
-    mvwprintw(win_header, start_row + 1, 2, " 1: Send Msg: %s", MsgHm::ROOM_REACHED);
-    mvwprintw(win_header, start_row + 2, 2, " 2: Send Msg: %s", MsgCm::OBJECT_GRASPED);
-    mvwprintw(win_header, start_row + 3, 2, " 3: Send Msg: %s", MsgCm::TASK_FINISHED);
-    mvwprintw(win_header, start_row + 4, 2, " 6: Send Msg: %s", MsgHm::DOES_NOT_EXIST);
-    mvwprintw(win_header, start_row + 5, 2, " 9: Send Msg: %s", MsgCm::GIVE_UP);
+    mvwprintw(win_header, start_row + 0, 2, " 1: Send Msg: %s", MsgHm::ROOM_REACHED);
+    mvwprintw(win_header, start_row + 1, 2, " 2: Send Msg: %s", MsgCm::OBJECT_GRASPED);
+    mvwprintw(win_header, start_row + 2, 2, " 3: Send Msg: %s", MsgCm::TASK_FINISHED);
+    mvwprintw(win_header, start_row + 3, 2, " 6: Send Msg: %s", MsgHm::DOES_NOT_EXIST);
+    mvwprintw(win_header, start_row + 4, 2, " 9: Send Msg: %s", MsgCm::GIVE_UP);
   }
 
   bool handle_numeric_key(int key) override
@@ -38,7 +37,6 @@ public:
 
     switch (key)
     {
-      case '0': send_message(MsgCm::I_AM_READY);     return true;
       case '1': send_message(MsgHm::ROOM_REACHED);   return true;
       case '2': send_message(MsgCm::OBJECT_GRASPED); return true;
       case '3': send_message(MsgCm::TASK_FINISHED);  return true;
@@ -64,6 +62,15 @@ private:
   void recv_message(const handyman_msgs::msg::HandymanMsg::SharedPtr message)
   {
     RCLCPP_INFO(node_->get_logger(),"HM:Subscribe:%s, %s", message->message.c_str(), message->detail.c_str());
+
+    if(message->message==MsgCm::ARE_YOU_READY)
+    {
+      handyman_msgs::msg::HandymanMsg i_am_ready_msg;
+      i_am_ready_msg.message = MsgCm::I_AM_READY;
+      pub_msg_hm_->publish(i_am_ready_msg);
+
+      RCLCPP_INFO(node_->get_logger(), "HM:Send msg:%s", MsgCm::I_AM_READY);
+    }
   }
 };
 

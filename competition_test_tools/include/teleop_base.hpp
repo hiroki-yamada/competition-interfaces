@@ -55,7 +55,7 @@ public:
 
 private:
   // Constant settings
-  const int WINDOW_HEADER_HEIGHT = 12;
+  const int WINDOW_HEADER_HEIGHT = 11;
 
   const std::string ARM_LIFT_JOINT_NAME   = "arm_lift_joint";
   const std::string ARM_FLEX_JOINT_NAME   = "arm_flex_joint";
@@ -374,12 +374,12 @@ inline void CompetitionTeleopKey::show_help()
   if (!win_header_){ return; }
   wclear(win_header_);
   box(win_header_, 0, 0);
-  mvwprintw(win_header_, 1, 2, "arrow keys : Move");
-  mvwprintw(win_header_, 2, 2, "Space: Stop");
-  mvwprintw(win_header_, 3, 2, "  q/z: Increase/Decrease Moving Speed");
-  mvwprintw(win_header_, 4, 2, "y/h/n: Up/Stop/Down Torso");
+  mvwprintw(win_header_, 1, 2, "arrow keys: Move");
+  mvwprintw(win_header_, 2, 2, "Space     : Stop");
+  mvwprintw(win_header_, 3, 2, "q/z    : Increase/Decrease Moving Speed");
+  mvwprintw(win_header_, 4, 2, "y/h/n  : Up/Stop/Down Torso");
   mvwprintw(win_header_, 5, 2, "a/b/c/d: Rotate Arm Vert/Up/Horiz/Down");
-  mvwprintw(win_header_, 6, 2, "g : Open/Close Gripper");
+  mvwprintw(win_header_, 6, 2, "g      : Open/Close Gripper");
 
   const int start_row_for_scenario = 7;
   if (scenario_) 
