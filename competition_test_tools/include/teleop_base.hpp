@@ -55,7 +55,7 @@ public:
 
 private:
   // Constant settings
-  const int WINDOW_HEADER_HEIGHT = 11;
+  const int WINDOW_HEADER_HEIGHT = 12;
 
   const std::string ARM_LIFT_JOINT_NAME   = "arm_lift_joint";
   const std::string ARM_FLEX_JOINT_NAME   = "arm_flex_joint";

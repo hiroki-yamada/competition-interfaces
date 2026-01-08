@@ -29,5 +29,9 @@
 <!--
 	<node pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share competition_test_tools)/launch/hsr.rviz"/>
 -->
+	<!-- Subscribe -->
+	<executable cmd="ros2 topic echo /human_navigation/message/task_info     human_navigation_msgs/msg/HumanNaviTaskInfo"     output="screen" launch-prefix="gnome-terminal -t 'HN Task Info' -- "/>
+	<executable cmd="ros2 topic echo /human_navigation/message/avatar_status human_navigation_msgs/msg/HumanNaviAvatarStatus" output="screen" launch-prefix="gnome-terminal -t 'HN Avatar Status' -- "/>
+	<executable cmd="ros2 topic echo /human_navigation/message/object_status human_navigation_msgs/msg/HumanNaviObjectStatus" output="screen" launch-prefix="gnome-terminal -t 'HN Object Status' -- "/>
 </launch>
 

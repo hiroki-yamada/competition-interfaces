@@ -6,6 +6,10 @@ namespace MsgHn
 {
   constexpr const char* TEST_MSG1 = "This is a test message.";
   constexpr const char* TEST_MSG2 = "Please take the apple and place it on the white table.";
+
+  constexpr const char* GET_AVATAR_STATUS = "Get_avatar_status";
+  constexpr const char* GET_OBJECT_STATUS = "Get_object_status";
+  constexpr const char* GET_SPEECH_STATE  = "Get_speech_state";
 }
 
 class HumanNavigationScenario : public TeleopScenarioInterface
@@ -25,9 +29,12 @@ public:
   {
     if (!win_header) { return; }
 
-    mvwprintw(win_header, start_row + 0, 2, " 1: Send Msg: %s", MsgHn::TEST_MSG1);
-    mvwprintw(win_header, start_row + 1, 2, " 2: Send Msg: %s", MsgHn::TEST_MSG2);
-    mvwprintw(win_header, start_row + 2, 2, " 9: Send Msg: %s", MsgCm::GIVE_UP);
+    mvwprintw(win_header, start_row + 0, 2, " 1: Send Guid: %s", MsgHn::TEST_MSG1);
+    mvwprintw(win_header, start_row + 1, 2, " 2: Send Guid: %s", MsgHn::TEST_MSG2);
+    mvwprintw(win_header, start_row + 2, 2, " 6: Send Msg:  %s", MsgHn::GET_AVATAR_STATUS);
+    mvwprintw(win_header, start_row + 3, 2, " 7: Send Msg:  %s", MsgHn::GET_OBJECT_STATUS);
+    mvwprintw(win_header, start_row + 4, 2, " 8: Send Msg:  %s", MsgHn::GET_SPEECH_STATE);
+    mvwprintw(win_header, start_row + 5, 2, " 9: Send Msg:  %s", MsgCm::GIVE_UP);
   }
 
   bool handle_numeric_key(int key) override
@@ -36,10 +43,13 @@ public:
 
     switch (key)
     {
-      case '1': send_guid_msg(MsgHn::TEST_MSG1, "All"); return true;
-      case '2': send_guid_msg(MsgHn::TEST_MSG2, "All"); return true;
-      case '9': send_message (MsgCm::GIVE_UP);          return true;
-      default:                                          return false;
+      case '1': send_guid_msg(MsgHn::TEST_MSG1, "All");  return true;
+      case '2': send_guid_msg(MsgHn::TEST_MSG2, "All");  return true;
+      case '6': send_message (MsgHn::GET_AVATAR_STATUS); return true;
+      case '7': send_message (MsgHn::GET_OBJECT_STATUS); return true;
+      case '8': send_message (MsgHn::GET_SPEECH_STATE);  return true;
+      case '9': send_message (MsgCm::GIVE_UP);           return true;
+      default:                                           return false;
     }
   }
 
