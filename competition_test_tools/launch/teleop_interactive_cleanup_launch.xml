@@ -3,7 +3,7 @@
 	<arg name="sigverse_ros_bridge_port"        default="50001" />
 	<arg name="ros_bridge_port"                 default="9090" />
 
-	<node pkg="competition_test_tools" exec="teleop_interactive_cleanup" output="screen" launch-prefix="gnome-terminal -t 'Interactive Cleanup' -- ">
+	<node pkg="competition_test_tools" exec="teleop_interactive_cleanup" output="screen" launch-prefix="gnome-terminal --geometry=80x30+100+100 -t 'Interactive Cleanup' -- ">
 		<!--
 		<remap from="/hsrb/message/to_robot"                  to="/hsrb/message/to_robot" />
 		<remap from="/hsrb/message/to_human"                  to="/hsrb/message/to_human" />
